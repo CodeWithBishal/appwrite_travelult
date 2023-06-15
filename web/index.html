@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Travel Ult - The Ultimate Travel management App.">
+  <link rel="preconnect" href="https://www.gstatic.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#90CAF9">
+  <meta name="apple-mobile-web-app-title" content="Travel Ult">
+  <meta name="theme-color" content="#90CAF9">
+
+    <!-- icons  -->
+    <link rel="icon" type="image/svg" sizes="512x512" href="icons/svg/main-512.svg">
+    <link rel="icon" href="icons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg" sizes="192x192" href="icons/svg/main-192.svg">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <!-- icons  -->
+    
+  <meta name="google-signin-client_id" content="47145260406-nllmha770tmlc2h3mq1h76i5ocveblot.apps.googleusercontent.com">
+
+  <title>Web Version | Travel Ult</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+body{
+  background:#F5F5F5;
+}
+
+.load{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:100px;
+  height:100px;
+}
+.load span{
+  margin:0;
+  width:40%;
+  height:40%;
+  position:absolute;
+  border-radius:50%;
+  animation:spin 2s ease infinite
+}
+
+.load :first-child{
+  background: #ED6663;animation-delay:-1.5s
+}
+.load :nth-child(2){
+  background:#FFEDA3;animation-delay:-1s
+}
+.load :nth-child(3){
+  background:#0A81AB;animation-delay:-0.5s
+}
+.load :last-child{
+  background:#000;
+}
+
+@keyframes spin{
+  0%,100%{
+    transform:translate(0)
+  }
+  25%{
+    transform:translate(160%)
+  }
+  50%{
+    transform:translate(160%, 160%)
+  }
+  75%{
+    transform:translate(0, 160%)
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="load" id="load">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <script>
+    document.addEventListener("load", function(){
+      document.getElementById("load").style.display = "none";
+    }) 
+  </script>
+
+
+  <script>
+    var serviceWorkerVersion = null;
+    var scriptLoaded = false;
+    function loadMainDartJs() {
+      if (scriptLoaded) {
+        return;
+      }
+      scriptLoaded = true;
+      var scriptTag = document.createElement('script');
+      scriptTag.src = 'main.dart.js';
+      scriptTag.type = 'application/javascript';
+      document.body.append(scriptTag);
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+        navigator.serviceWorker.register(serviceWorkerUrl)
+          .then((reg) => {
+            function waitForActivation(serviceWorker) {
+              serviceWorker.addEventListener('statechange', () => {
+                if (serviceWorker.state == 'activated') {
+                  loadMainDartJs();
+                }
+              });
+            }
+            if (!reg.active && (reg.installing || reg.waiting)) {
+              waitForActivation(reg.installing || reg.waiting);
+            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+              reg.update();
+              waitForActivation(reg.installing);
+            } else {
+              loadMainDartJs();
+            }
+          });
+        setTimeout(() => {
+          if (!scriptLoaded) {
+            console.warn(
+              'Failed to load app from service worker. Falling back to plain <script> tag.',
+            );
+            loadMainDartJs();
+          }
+        }, 4000);
+      });
+    } else {
+      loadMainDartJs();
+    }
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyC8lO-sS_8qL8L_P9v5RSCJWVZIMqCXUMk",
+      authDomain: "travelult-b1eb7.firebaseapp.com",
+      projectId: "travelult-b1eb7",
+      storageBucket: "travelult-b1eb7.appspot.com",
+      messagingSenderId: "47145260406",
+      appId: "1:47145260406:web:cc36d277c8602c839c1657",
+      measurementId: "G-MR29FES9JL"
+    };
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</body>
+</html>
